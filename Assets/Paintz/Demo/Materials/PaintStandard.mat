@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: PaintStandard
   m_Shader: {fileID: 4800000, guid: 2b0f5fce771a1c645adeaed55998c8f1, type: 3}
   m_ShaderKeywords: 
@@ -23,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpTex:
-        m_Texture: {fileID: 2800000, guid: bd9f8d3c83e1817448f20654d4a3a740, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -43,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6e93a993aa9434d4a9055e58664f09fa, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -97,3 +98,4 @@ Material:
     - _SplatColor2: {r: 1, g: 0, b: 0, a: 1}
     - _SplatColor3: {r: 0, g: 1, b: 0, a: 1}
     - _SplatColor4: {r: 0, g: 0, b: 1, a: 1}
+  m_BuildTextureStacks: []
