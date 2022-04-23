@@ -33,6 +33,7 @@ Shader "Shapes/Regular Polygon Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define DARKEN
 				#include "../../Core/Regular Polygon Core.cginc"
@@ -52,6 +53,7 @@ Shader "Shapes/Regular Polygon Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define DARKEN
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
@@ -73,6 +75,7 @@ Shader "Shapes/Regular Polygon Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define DARKEN
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap

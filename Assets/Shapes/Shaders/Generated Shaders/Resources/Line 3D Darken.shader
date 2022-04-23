@@ -33,6 +33,7 @@ Shader "Shapes/Line 3D Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define DARKEN
@@ -53,6 +54,7 @@ Shader "Shapes/Line 3D Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define DARKEN
@@ -75,6 +77,7 @@ Shader "Shapes/Line 3D Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define DARKEN

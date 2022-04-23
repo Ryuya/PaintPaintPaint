@@ -31,6 +31,7 @@ Shader "Shapes/Line 3D Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define OPAQUE
@@ -51,6 +52,7 @@ Shader "Shapes/Line 3D Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define OPAQUE
@@ -73,6 +75,7 @@ Shader "Shapes/Line 3D Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define OPAQUE

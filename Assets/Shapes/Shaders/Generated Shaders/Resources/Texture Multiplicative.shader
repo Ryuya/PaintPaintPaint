@@ -33,6 +33,7 @@ Shader "Shapes/Texture Multiplicative" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define MULTIPLICATIVE
 				#include "../../Core/Texture Core.cginc"
@@ -52,6 +53,7 @@ Shader "Shapes/Texture Multiplicative" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define MULTIPLICATIVE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
@@ -73,6 +75,7 @@ Shader "Shapes/Texture Multiplicative" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define MULTIPLICATIVE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap

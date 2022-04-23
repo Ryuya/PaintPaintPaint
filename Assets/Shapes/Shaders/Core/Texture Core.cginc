@@ -18,6 +18,7 @@ struct VertexInput {
 struct VertexOutput {
     float4 pos : SV_POSITION;
     half2 uv : TEXCOORD1;
+    UNITY_FOG_COORDS(2)
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -35,11 +36,12 @@ VertexOutput vert(VertexInput v) {
     o.uv = UvToRect( uv01, _Uvs );
     v.vertex.xy = UvToRect( uv01, _Rect );
     o.pos = UnityObjectToClipPos(v.vertex);
+    UNITY_TRANSFER_FOG(o,o.pos);
     return o;
 }
 
 FRAG_OUTPUT_V4 frag(VertexOutput i) : SV_Target {
     UNITY_SETUP_INSTANCE_ID(i);
     half4 shape_color = tex2D(_MainTex, i.uv) * _Color;
-    return ShapesOutput(shape_color, 1);
+    return SHAPES_OUTPUT(shape_color, 1, i);
 }

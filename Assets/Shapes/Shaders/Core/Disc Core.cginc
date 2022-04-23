@@ -49,6 +49,7 @@ struct VertexOutput {
     #ifdef INNER_RADIUS
 		half4 intp1 : TEXCOORD1;
     #endif
+	UNITY_FOG_COORDS(2)
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 	UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -143,6 +144,7 @@ VertexOutput vert (VertexInput v) {
 	
 	o.IP_uv0 = v.uv0;
     o.pos = UnityObjectToClipPos( v.vertex / uniformScale );
+	UNITY_TRANSFER_FOG(o,o.pos);
 
     return o;
 }
@@ -169,7 +171,7 @@ FRAG_OUTPUT_V4 frag( VertexOutput i ) : SV_Target {
 	mask *= saturate(i.IP_pxCoverage); // pixel fade
 	
     half4 color = GetColor( tRadial, tAngular );
-	return ShapesOutput( color, mask );
+	return SHAPES_OUTPUT( color, mask, i );
 }
 
 

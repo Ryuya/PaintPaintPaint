@@ -33,6 +33,7 @@ Shader "Shapes/Rect Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CORNER_RADIUS
 				#pragma multi_compile __ BORDERED
@@ -54,6 +55,7 @@ Shader "Shapes/Rect Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CORNER_RADIUS
 				#pragma multi_compile __ BORDERED
@@ -77,6 +79,7 @@ Shader "Shapes/Rect Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CORNER_RADIUS
 				#pragma multi_compile __ BORDERED

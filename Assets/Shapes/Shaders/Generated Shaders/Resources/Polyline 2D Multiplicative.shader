@@ -32,6 +32,7 @@ Shader "Shapes/Polyline 2D Multiplicative" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ IS_JOIN_MESH
 				#pragma multi_compile __ JOIN_MITER JOIN_ROUND JOIN_BEVEL
@@ -53,6 +54,7 @@ Shader "Shapes/Polyline 2D Multiplicative" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ IS_JOIN_MESH
 				#pragma multi_compile __ JOIN_MITER JOIN_ROUND JOIN_BEVEL
@@ -76,6 +78,7 @@ Shader "Shapes/Polyline 2D Multiplicative" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ IS_JOIN_MESH
 				#pragma multi_compile __ JOIN_MITER JOIN_ROUND JOIN_BEVEL

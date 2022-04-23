@@ -36,6 +36,7 @@ struct VertexOutput {
         float3 worldPos : TEXCOORD2;
         float3 origin : TEXCOORD3;
     #endif
+    UNITY_FOG_COORDS(4)
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -201,6 +202,7 @@ VertexOutput vert (VertexInput v) {
             break;
         }
     }
+    UNITY_TRANSFER_FOG(o,o.pos);
     
     return o;
 }
@@ -227,6 +229,6 @@ FRAG_OUTPUT_V4 frag( VertexOutput i ) : SV_Target {
 
     shape_mask *= saturate( i.IP_pxCoverage );
     
-    return ShapesOutput( i.color, shape_mask );
+    return SHAPES_OUTPUT( i.color, shape_mask, i );
     
 }

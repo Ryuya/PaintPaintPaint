@@ -32,6 +32,7 @@ Shader "Shapes/Disc ColorBurn" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ INNER_RADIUS
 				#pragma multi_compile __ SECTOR
@@ -53,6 +54,7 @@ Shader "Shapes/Disc ColorBurn" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ INNER_RADIUS
 				#pragma multi_compile __ SECTOR
@@ -76,6 +78,7 @@ Shader "Shapes/Disc ColorBurn" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ INNER_RADIUS
 				#pragma multi_compile __ SECTOR

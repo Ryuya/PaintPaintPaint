@@ -31,6 +31,7 @@ Shader "Shapes/Triangle Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define OPAQUE
 				#include "../../Core/Triangle Core.cginc"
@@ -50,6 +51,7 @@ Shader "Shapes/Triangle Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define OPAQUE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
@@ -71,6 +73,7 @@ Shader "Shapes/Triangle Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define OPAQUE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap

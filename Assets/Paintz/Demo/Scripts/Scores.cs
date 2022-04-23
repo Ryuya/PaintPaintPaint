@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using TMPro;
     
@@ -9,10 +10,11 @@ public class Scores : MonoBehaviour
     public float updateSpeed = 1;
     
     public float inProgress = 0;
-
+    private float n;
     public TextMesh player1;
     public TextMesh player2;
-
+    public PerDisc PerDisc;
+    public ClearJadge clear_judge;
 	void Start ()
     {
 	}
@@ -32,16 +34,26 @@ public class Scores : MonoBehaviour
 
         PaintTarget.TallyScore();
 
-        float n = PaintTarget.scores.x + PaintTarget.scores.y + PaintTarget.scores.z + PaintTarget.scores.w;
-        inProgress = Mathf.RoundToInt(((PaintTarget.scores.x / n) * 100.0f));
+        n = PaintTarget.scores.x + PaintTarget.scores.y + PaintTarget.scores.z + PaintTarget.scores.w;
+        inProgress = (PaintTarget.scores.x / n) * 100.0f / clear_judge.clearPersent;
         if (n == 0)
         {
             ClearScores();
             return;
         }
 
-        if (player1 != null) player1.text = Mathf.RoundToInt(((PaintTarget.scores.x / n) * 100.0f)).ToString() + "%";
-        if (player2 != null) player2.text = Mathf.RoundToInt(((PaintTarget.scores.x / n) * 100.0f)).ToString() + "%";
-       
+        if (player1 != null) player1.text = ((PaintTarget.scores.x / n) * 100.0f).ToString("F0") + "%";
+        if (player2 != null) player2.text = ((PaintTarget.scores.x / n) * 100.0f).ToString("F0") + "%";
+        if (clear_judge.clearPersent > 0)
+        {
+            PerDisc.setDisc(((PaintTarget.scores.x / n) * 100.0f) / clear_judge.clearPersent,"persent");
+            Debug.LogWarning(((PaintTarget.scores.x / n) * 100.0f) / clear_judge.clearPersent);
+        }
+        
+    }
+
+    public float getProgress()
+    {
+        return  Mathf.RoundToInt(((PaintTarget.scores.x / n) * 100.0f));
     }
 }

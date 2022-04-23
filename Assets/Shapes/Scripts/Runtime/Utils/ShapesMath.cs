@@ -37,13 +37,21 @@ namespace Shapes {
 		[MethodImpl( INLINE )] public static Color WeightedSum( Vector4 w, Color a, Color b, Color c, Color d ) => w.x * a + w.y * b + w.z * c + w.w * d;
 
 		public static bool PointInsideTriangle( Vector2 a, Vector2 b, Vector2 c, Vector2 point, float aMargin = 0f, float bMargin = 0f, float cMargin = 0f ) {
-			float d0 = Determinant( b - a, point - a );
-			float d1 = Determinant( c - b, point - b );
-			float d2 = Determinant( a - c, point - c );
+			float d0 = Determinant( Dir( a, b ), Dir( a, point ) );
+			float d1 = Determinant( Dir( b, c ), Dir( b, point ) );
+			float d2 = Determinant( Dir( c, a ), Dir( c, point ) );
 			bool b0 = d0 < cMargin;
 			bool b1 = d1 < aMargin;
 			bool b2 = d2 < bMargin;
 			return b0 == b1 && b1 == b2; // on the same side of all halfspaces, this can only happen inside
+		}
+
+		/// <summary>Direction from a to b, skipping intermediate Vector2s for speed</summary>
+		[MethodImpl( INLINE )] internal static Vector2 Dir( Vector2 a, Vector2 b ) {
+			float dx = b.x - a.x;
+			float dy = b.y - a.y;
+			float mag = Mathf.Sqrt( dx * dx + dy * dy );
+			return new Vector2( dx / mag, dy / mag );
 		}
 
 		public static float PolygonSignedArea( List<Vector2> pts ) {

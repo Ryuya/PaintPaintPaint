@@ -91,6 +91,12 @@ inline float3 Rotate90Left( in float3 v ){
 inline float3 Rotate90Right( in float3 v ){
 	return float3( v.y, -v.x, 0 );
 }
+inline half Repeat(float v, float len) {
+    return clamp( v - floor( v / len ) * len, 0, len );
+}
+inline half DeltaAngle(half a, half b) {
+    return Repeat( b - a + TAU*0.5, TAU ) - TAU*0.5;
+}
 void GetDirMag( in float2 v, out float2 dir, out float mag ){
 	mag = length( v );
 	dir = v / mag; // Normalize

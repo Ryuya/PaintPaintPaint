@@ -32,6 +32,7 @@ Shader "Shapes/Texture Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define OPAQUE
 				#include "../../Core/Texture Core.cginc"
@@ -51,6 +52,7 @@ Shader "Shapes/Texture Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define OPAQUE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
@@ -72,6 +74,7 @@ Shader "Shapes/Texture Opaque" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define OPAQUE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap

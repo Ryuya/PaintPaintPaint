@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 #if SHAPES_URP
 using UnityEngine.Rendering.Universal;
+
 #elif SHAPES_HDRP
 using UnityEngine.Rendering.HighDefinition;
 #else
@@ -324,6 +325,8 @@ namespace Shapes {
 
 		[OvldGenCallTarget] static void Torus_Internal( float radius,
 														float thickness,
+														[OvldDefault( "0" )] float angStart,
+														[OvldDefault( nameof(ShapesMath) + ".TAU" )] float angEnd,
 														[OvldDefault( nameof(Color) )] Color color ) {
 			if( thickness < 0.0001f )
 				return;
@@ -342,6 +345,8 @@ namespace Shapes {
 				mpbTorus.radiusSpace.Add( (int)Draw.RadiusSpace );
 				mpbTorus.thicknessSpace.Add( (int)Draw.ThicknessSpace );
 				mpbTorus.scaleMode.Add( (int)Draw.ScaleMode );
+				mpbTorus.angleStart.Add( angStart );
+				mpbTorus.angleEnd.Add( angEnd );
 			}
 		}
 
@@ -375,8 +380,16 @@ namespace Shapes {
 			tmp.rectTransform.rotation = Matrix.rotation;
 			tmp.ForceMeshUpdate();
 
+			// todo: something fucky happens sometimes when fallback fonts are the only things in town
 			using( new IMDrawer( mpbText, font.material, tmp.mesh, drawType: IMDrawer.DrawType.Text, allowInstancing: false ) ) {
 				// will draw on dispose
+			}
+			
+			// ensure child renderers are disabled
+			for( int i = 0; i < tmp.transform.childCount; i++ ) {
+				// todo: optimize by caching some refs fam
+				TMP_SubMesh sm = tmp.transform.GetChild( i ).GetComponent<TMP_SubMesh>();
+				sm.renderer.enabled = false; // :>
 			}
 
 			// ;-;
@@ -384,6 +397,7 @@ namespace Shapes {
 				// we have fallback fonts so GreaT!! let's just draw everything because fuck me
 				for( int i = 0; i < tmp.transform.childCount; i++ ) {
 					TMP_SubMesh sm = tmp.transform.GetChild( i ).GetComponent<TMP_SubMesh>();
+					sm.renderer.enabled = false; // :>
 					using( new IMDrawer( mpbText, sm.material, sm.mesh, drawType: IMDrawer.DrawType.Text, allowInstancing: false ) ) {
 						// will draw on dispose
 					}

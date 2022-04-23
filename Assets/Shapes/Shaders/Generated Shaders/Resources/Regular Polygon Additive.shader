@@ -32,6 +32,7 @@ Shader "Shapes/Regular Polygon Additive" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define ADDITIVE
 				#include "../../Core/Regular Polygon Core.cginc"
@@ -51,6 +52,7 @@ Shader "Shapes/Regular Polygon Additive" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define ADDITIVE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
@@ -72,6 +74,7 @@ Shader "Shapes/Regular Polygon Additive" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define ADDITIVE
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap

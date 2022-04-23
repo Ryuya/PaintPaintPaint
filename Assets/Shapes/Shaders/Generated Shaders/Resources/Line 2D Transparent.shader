@@ -32,6 +32,7 @@ Shader "Shapes/Line 2D Transparent" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define TRANSPARENT
@@ -52,6 +53,7 @@ Shader "Shapes/Line 2D Transparent" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define TRANSPARENT
@@ -74,6 +76,7 @@ Shader "Shapes/Line 2D Transparent" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#pragma multi_compile __ CAP_ROUND CAP_SQUARE
 				#define TRANSPARENT

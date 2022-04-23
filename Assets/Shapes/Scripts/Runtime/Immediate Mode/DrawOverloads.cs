@@ -3047,48 +3047,94 @@ namespace Shapes {
 		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, float radius, float thickness ) {
 			Draw.PushMatrix();
 			Draw.Translate( pos );
-			Torus_Internal( radius, thickness, Color );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
 			Draw.PopMatrix();
 		}
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="color">The color of the torus</param>
 		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, float radius, float thickness, Color color ) {
 			Draw.PushMatrix();
 			Draw.Translate( pos );
-			Torus_Internal( radius, thickness, color );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
 			Draw.PopMatrix();
 		}
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="normal">The normal direction of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param>
 		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Vector3 normal, float radius, float thickness ) {
 			Draw.PushMatrix();
 			Draw.Matrix *= Matrix4x4.TRS( pos, Quaternion.LookRotation( normal ), Vector3.one );
-			Torus_Internal( radius, thickness, Color );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
 			Draw.PopMatrix();
 		}
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="normal">The normal direction of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="color">The color of the torus</param>
 		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Vector3 normal, float radius, float thickness, Color color ) {
 			Draw.PushMatrix();
 			Draw.Matrix *= Matrix4x4.TRS( pos, Quaternion.LookRotation( normal ), Vector3.one );
-			Torus_Internal( radius, thickness, color );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
 			Draw.PopMatrix();
 		}
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="rot">The orientation of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param>
 		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Quaternion rot, float radius, float thickness ) {
 			Draw.PushMatrix();
 			Draw.Matrix *= Matrix4x4.TRS( pos, rot, Vector3.one );
-			Torus_Internal( radius, thickness, Color );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
 			Draw.PopMatrix();
 		}
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="rot">The orientation of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="color">The color of the torus</param>
 		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Quaternion rot, float radius, float thickness, Color color ) {
 			Draw.PushMatrix();
 			Draw.Matrix *= Matrix4x4.TRS( pos, rot, Vector3.one );
-			Torus_Internal( radius, thickness, color );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
 			Draw.PopMatrix();
 		}
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param>
-		[MethodImpl( INLINE )] public static void Torus( float radius, float thickness ) => Torus_Internal( radius, thickness, Color );
+		[MethodImpl( INLINE )] public static void Torus( float radius, float thickness ) => Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
 		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="color">The color of the torus</param>
-		[MethodImpl( INLINE )] public static void Torus( float radius, float thickness, Color color ) => Torus_Internal( radius, thickness, color );
+		[MethodImpl( INLINE )] public static void Torus( float radius, float thickness, Color color ) => Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param>
+		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, float radius, float thickness, float angleRadStart, float angleRadEnd ) {
+			Draw.PushMatrix();
+			Draw.Translate( pos );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
+			Draw.PopMatrix();
+		}
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param><param name="color">The color of the torus</param>
+		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, float radius, float thickness, float angleRadStart, float angleRadEnd, Color color ) {
+			Draw.PushMatrix();
+			Draw.Translate( pos );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
+			Draw.PopMatrix();
+		}
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="normal">The normal direction of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param>
+		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Vector3 normal, float radius, float thickness, float angleRadStart, float angleRadEnd ) {
+			Draw.PushMatrix();
+			Draw.Matrix *= Matrix4x4.TRS( pos, Quaternion.LookRotation( normal ), Vector3.one );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
+			Draw.PopMatrix();
+		}
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="normal">The normal direction of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param><param name="color">The color of the torus</param>
+		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Vector3 normal, float radius, float thickness, float angleRadStart, float angleRadEnd, Color color ) {
+			Draw.PushMatrix();
+			Draw.Matrix *= Matrix4x4.TRS( pos, Quaternion.LookRotation( normal ), Vector3.one );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
+			Draw.PopMatrix();
+		}
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="rot">The orientation of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param>
+		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Quaternion rot, float radius, float thickness, float angleRadStart, float angleRadEnd ) {
+			Draw.PushMatrix();
+			Draw.Matrix *= Matrix4x4.TRS( pos, rot, Vector3.one );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
+			Draw.PopMatrix();
+		}
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="pos">The position of the torus</param><param name="rot">The orientation of the torus</param><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param><param name="color">The color of the torus</param>
+		[MethodImpl( INLINE )] public static void Torus( Vector3 pos, Quaternion rot, float radius, float thickness, float angleRadStart, float angleRadEnd, Color color ) {
+			Draw.PushMatrix();
+			Draw.Matrix *= Matrix4x4.TRS( pos, rot, Vector3.one );
+			Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
+			Draw.PopMatrix();
+		}
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param>
+		[MethodImpl( INLINE )] public static void Torus( float radius, float thickness, float angleRadStart, float angleRadEnd ) => Torus_Internal( radius, thickness, 0, ShapesMath.TAU, Color );
+		/// <summary>Draws a 3D torus with a given radius and thickness</summary><param name="radius">The radius of this torus</param><param name="thickness">The thickness of the torus</param><param name="angleRadStart">The start angle of the torus, in radians</param><param name="angleRadEnd">The end angle of the torus, in radians</param><param name="color">The color of the torus</param>
+		[MethodImpl( INLINE )] public static void Torus( float radius, float thickness, float angleRadStart, float angleRadEnd, Color color ) => Torus_Internal( radius, thickness, 0, ShapesMath.TAU, color );
 		/// <summary>Draws text using Text Mesh Pro</summary><param name="pos">The position of the text</param><param name="content">The text to display</param>
 		[MethodImpl( INLINE )] public static void Text( Vector3 pos, string content ) {
 			Draw.PushMatrix();

@@ -34,6 +34,7 @@ Shader "Shapes/Texture Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define DARKEN
 				#include "../../Core/Texture Core.cginc"
@@ -53,6 +54,7 @@ Shader "Shapes/Texture Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define DARKEN
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
@@ -74,6 +76,7 @@ Shader "Shapes/Texture Darken" {
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
+				#pragma multi_compile_fog
 				#pragma multi_compile_instancing
 				#define DARKEN
 				#pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap
