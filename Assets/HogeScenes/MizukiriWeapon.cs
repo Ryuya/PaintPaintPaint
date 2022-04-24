@@ -40,7 +40,10 @@ public class MizukiriWeapon :  Weapon
 
     public bool IsUnLock;
     public int currentLevel;
-
+    public int currentLevelIndex
+    {
+        get { return currentLevel - 1; }
+    }
     public int CurrentLevel
     {
         get
@@ -80,12 +83,31 @@ public class MizukiriWeapon :  Weapon
         }
         if (isOne == false && SceneManager.GetActiveScene().name == "UpGrade") 
         {
+            if (CurrentLevel > costList.Count)
+            {
+                GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevelIndex].ToString();
+                GameObject.Find("LevelPanel/LvNextVal").GetComponent<Text>().text = "";
+                GameObject.Find("InkScale/Lv").GetComponent<Text>().text = inkScaleList[currentLevelIndex].ToString();
+                GameObject.Find("InkScale/LvNextVal").GetComponent<Text>().text = "";
+                GameObject.Find("InkAmo/Lv").GetComponent<Text>().text = inkAmoList[currentLevelIndex].ToString();
+                GameObject.Find("InkAmo/LvNextVal").GetComponent<Text>().text = "";
+                GameObject.Find("SpitFire/Lv").GetComponent<Text>().text = spitFireList[currentLevelIndex].ToString();
+                GameObject.Find("SpitFire/LvNextVal").GetComponent<Text>().text = "";
+                GameObject.Find("AbilityLevel/Lv").GetComponent<Text>().text =
+                    "Lv" + AbilityLevel[currentLevelIndex].ToString();
+                GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
+                    "";
+                isOne = true;
+                GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
+                return;
+            }
+            
             GameObject.Find("HaveMoneyText").GetComponent<Text>().text = ES3.Load<int>("Money").ToString()+"$";
-            GameObject.Find("/Canvas/AllFramePanel/L_Panel/L_InnerFramePanel/Button/UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+            GameObject.Find("/Canvas/AllFramePanel/L_Panel/L_InnerFramePanel/Button/UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevelIndex].ToString()+"$";
             CheckMax();
             GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.AddListener(Upgrade);
-            if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevel-1 < costList.Count)
+            if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevelIndex < costList.Count)
             {
                 GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = true;
             }
@@ -94,21 +116,8 @@ public class MizukiriWeapon :  Weapon
                 GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
             }
             UpdateUI();
-            if (currentLevel == costList.Count)
-            {
-                GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevel].ToString();
-                GameObject.Find("LevelPanel/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("InkScale/Lv").GetComponent<Text>().text = inkScaleList[currentLevel].ToString();
-                GameObject.Find("InkScale/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("InkAmo/Lv").GetComponent<Text>().text = inkAmoList[currentLevel].ToString();
-                GameObject.Find("InkAmo/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("SpitFire/Lv").GetComponent<Text>().text = spitFireList[currentLevel].ToString();
-                GameObject.Find("SpitFire/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("AbilityLevel/Lv").GetComponent<Text>().text =
-                    "Lv" + AbilityLevel[currentLevel].ToString();
-                GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
-                    "";
-            }
+            
+            
             isOne = true;
         }
 
@@ -138,7 +147,7 @@ public class MizukiriWeapon :  Weapon
             ES3.Save<int>("Money", haveMoney);
             GameObject.Find("HaveMoneyText").GetComponent<Text>().text = haveMoney.ToString()+"$";
             CheckMax();
-            if (CurrentLevel < costList.Count)
+            if (CurrentLevel <= costList.Count)
             {
                 CurrentLevel += 1;
                 UpdateUI();
@@ -159,7 +168,14 @@ public class MizukiriWeapon :  Weapon
                     "";
             }
         }
-        
+        if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevelIndex < costList.Count)
+        {
+            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
+        }
         
     }
 

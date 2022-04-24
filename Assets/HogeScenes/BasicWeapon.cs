@@ -40,7 +40,10 @@ public class BasicWeapon :  Weapon
 
     public bool IsUnLock;
     public int currentLevel;
-
+    public int currentLevelIndex
+    {
+        get { return currentLevel - 1; }
+    }
     public int CurrentLevel
     {
         get
@@ -163,7 +166,14 @@ public class BasicWeapon :  Weapon
 
             Save();    
         }
-        
+        if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevelIndex < costList.Count)
+        {
+            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
+        }
         
     }
 

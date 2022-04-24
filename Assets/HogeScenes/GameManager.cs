@@ -121,8 +121,6 @@ public class GameManager : MonoBehaviour
         showGameClear = GameObject.Find("/ResultCanvas/Result/ClearText/");
         GameResult = GameObject.Find("/ResultCanvas");
         GameResult.SetActive(false);
-        currentMoney = 0;
-        
         // StageSelectCanvas = GameObject.Find("/StageSelectCanvas").GetComponent<GameObject>();
         // StageSelectCanvas.SetActive(false);
     }
@@ -163,7 +161,7 @@ public class GameManager : MonoBehaviour
     {
         isGameEnd = true;
         isStageClear = false;
-        showGameClear.GetComponent<Text>().text = "GAME OVER" + SceneManager.GetActiveScene().name;;
+        showGameClear.GetComponent<Text>().text = "GAME OVER";
         showGameClear.GetComponent<Text>().color = Color.red;
         showGameClear.GetComponent<Text>().fontSize = 69;
         showGameClear.SetActive(true);
