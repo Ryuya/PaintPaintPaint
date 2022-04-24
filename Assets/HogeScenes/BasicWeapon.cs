@@ -85,20 +85,6 @@ public class BasicWeapon :  Weapon
         
         if (isOne == false && SceneManager.GetActiveScene().name == "UpGrade") 
         {
-            GameObject.Find("HaveMoneyText").GetComponent<Text>().text = ES3.Load<int>("Money").ToString()+"$";
-            GameObject.Find("/Canvas/AllFramePanel/L_Panel/L_InnerFramePanel/Button/UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
-            CheckMax();
-            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.RemoveAllListeners();
-            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.AddListener(Upgrade);
-            if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevel <= costList.Count)
-            {
-                GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = true;
-            }
-            else
-            {
-                GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
-            }
-            UpdateUI();
             if (currentLevel == costList.Count)
             {
                 GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevel].ToString();
@@ -113,6 +99,19 @@ public class BasicWeapon :  Weapon
                     "Lv" + AbilityLevel[currentLevel].ToString();
                 GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
                     "";
+            }
+            GameObject.Find("HaveMoneyText").GetComponent<Text>().text = ES3.Load<int>("Money").ToString()+"$";
+            GameObject.Find("/Canvas/AllFramePanel/L_Panel/L_InnerFramePanel/Button/UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+            CheckMax();
+            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.RemoveAllListeners();
+            GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.AddListener(Upgrade);
+            if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevelIndex < costList.Count)
+            {
+                GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
             }
             isOne = true;
         }
@@ -143,7 +142,7 @@ public class BasicWeapon :  Weapon
             ES3.Save<int>("Money", haveMoney);
             GameObject.Find("HaveMoneyText").GetComponent<Text>().text = haveMoney.ToString()+"$";
             CheckMax();
-            if (CurrentLevel < costList.Count)
+            if (CurrentLevel <= costList.Count)
             {
                 CurrentLevel += 1;
                 UpdateUI();
