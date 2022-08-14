@@ -18,7 +18,7 @@ public class CoinItem : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player1")
         {
             GameManager.Instance.currentMoney += Ammount;
             Destroy(this.gameObject);

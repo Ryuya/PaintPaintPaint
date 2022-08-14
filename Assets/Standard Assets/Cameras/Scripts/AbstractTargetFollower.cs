@@ -83,7 +83,7 @@ namespace UnityStandardAssets.Cameras
         public void FindAndTargetPlayer()
         {
             // auto target an object tagged player, if no target has been assigned
-            var targetObj = GameObject.FindGameObjectWithTag("Player");
+            var targetObj = GameObject.FindGameObjectWithTag("Player1");
             if (targetObj)
             {
                 SetTarget(targetObj.transform);

@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class FPSActor : MonoBehaviour
 {
+    public AudioSource audioSource;
     public UniversalButton inputMove;
     public TouchArea inputAimArea;
     public TouchArea inputAimBtn;
@@ -49,10 +50,40 @@ public class FPSActor : MonoBehaviour
     bool One = false;
 
     public Mizukiri mizukiri;
+
+    public bool isStunned = false;
+    [System.NonSerialized]
+    public float stunTime = 2f;
     
+    //状態異常系
+    [System.NonSerialized]
+    public float heistTime = 0f;
+    public bool isHeist = false;
+    [NonSerialized]
+    public float heistPower = 1.0f;
+    [NonSerialized]
+    public float heistAddFixPower = 1.8f;
+    [System.NonSerialized]
+    public float killDropTime = 0f;
+    public bool isKillDrop = false;
+    [System.NonSerialized]
+    public float doubleTime = 0f;
+    public bool isDouble = false;
+    [System.NonSerialized]
+    public int doubleLevel = 3;
+    [System.NonSerialized]
+    public float coinDropTime = 0f;
+    public bool isCoinDrop = false;
+    [System.NonSerialized]
+    public float increaseEnemyTime = 0f;
+    public bool isIncreaseEnemy = false;
+
+
     //インクを補充する際は200~400 4~8個取得
     protected virtual void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        stunTime = 2f;
         Application.targetFrameRate = 60;
         ball = GetComponent<Ball>();
         // currentInk = MAX_INK;
@@ -131,7 +162,7 @@ public class FPSActor : MonoBehaviour
 
        
         // Moving the actor
-        if (inputMove.isFingerDown)
+        if (inputMove.isFingerDown && !isStunned)
         {
             cachedInputMove = inputMove.directionXZ;
             Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
@@ -140,7 +171,7 @@ public class FPSActor : MonoBehaviour
             Vector3 moveForward = cameraForward * cachedInputMove.z + Camera.main.transform.right * cachedInputMove.x;
             // Vector3 moveForward = cameraForward;
             // ball.Move(moveForward,false);
-            this.transform.position += moveForward *0.1f *speed;
+            this.transform.position += moveForward *0.1f * speed * heistPower;
             // this.transform.rotation = Quaternion.Euler(this.transform.rotation.x,moveForward.y,this.transform.rotation.x);
             anim.SetFloat("moveSpeed",1);
             
@@ -148,6 +179,15 @@ public class FPSActor : MonoBehaviour
         }
         else
         {
+            
+            if (stunTime <= 0)
+            {
+                isStunned = false;
+            }
+            else
+            {
+                stunTime -= Time.deltaTime;
+            }
             anim.SetFloat("moveSpeed",0);
             if (lerpStopping)
             {
@@ -176,6 +216,45 @@ public class FPSActor : MonoBehaviour
         // prev = transform.position;
         // Move camera mount 
         fpsCameraMount.transform.position = transform.position + cameraOffset;
+        
+        
+        //Positon 系
+        if (heistTime > 0)
+        {
+            heistTime -= Time.deltaTime;
+            // ポーションの効果
+            HeistAddFunction();
+        }
+        else
+        {
+            HeistRemoveFunction();
+            heistTime = 0;
+        }
+        
+        if (doubleTime > 0)
+        {
+            doubleTime -= Time.deltaTime;
+            // ポーションの効果
+            isDouble = true;
+        }
+        else
+        {
+            doubleTime = 0;
+            isDouble = false;
+        }
+        
+        if (increaseEnemyTime > 0)
+        {
+            increaseEnemyTime -= Time.deltaTime;
+            // ポーションの効果
+            isIncreaseEnemy = true;
+        }
+        else
+        {
+            increaseEnemyTime = 0;
+            isIncreaseEnemy = false;
+        }
+        
     }
 
     public void Shoot()
@@ -186,22 +265,51 @@ public class FPSActor : MonoBehaviour
         shootTime += Time.deltaTime;
         if (spitFire <= shootTime && currentInk >= inkCost)
         {
+            // audioSource.PlayOneShot(audioSource.clip);
             currentInk -= inkCost;
-            GameObject go = Instantiate(OrangeBulletPrefab,new Vector3(Muzzle.transform.position.x,Muzzle.transform.position.y,Muzzle.transform.position.z),Quaternion.Euler(transform.localEulerAngles));
-            var rb = go.GetComponent<Rigidbody>();
-            go.GetComponent<CollisionPainter>().brush.splatScale = splatScale;
-            var buletForce = transform.forward * (Random.Range(0,4) * 40f +(Random.Range(1f,12f)));
-            buletForce += transform.right * Random.Range(-0.3f, 0.3f);
-            var mizukiri = go.GetComponent<Mizukiri>();
-            if (mizukiri != null)
+            if (isDouble)
             {
-                mizukiri.prevVelocity = buletForce;
-                mizukiri.count = abilityLevel;
+                for (int i = 1; i <= doubleLevel; i++)
+                {
+                    
+                    GameObject go = Instantiate(OrangeBulletPrefab,
+                        new Vector3(Muzzle.transform.position.x, Muzzle.transform.position.y, Muzzle.transform.position.z),
+                        Quaternion.Euler(transform.localEulerAngles));
+                    var rb = go.GetComponent<Rigidbody>();
+                    go.GetComponent<CollisionPainter>().brush.splatScale = splatScale;
+                    var buletForce = transform.forward * (Random.Range(0, 4) * 40f + (Random.Range(1f, 12f)));
+                    buletForce += transform.right * Random.Range(-0.3f, 0.3f);
+                    var mizukiri = go.GetComponent<Mizukiri>();
+                    if (mizukiri != null)
+                    {
+                        mizukiri.prevVelocity = buletForce;
+                        mizukiri.count = abilityLevel;
+                    }
+
+                    rb.AddForce(buletForce, ForceMode.Impulse);
+                }
             }
-            rb.AddForce(buletForce,ForceMode.Impulse);
+            else
+            {
+                GameObject go = Instantiate(OrangeBulletPrefab,
+                    new Vector3(Muzzle.transform.position.x, Muzzle.transform.position.y, Muzzle.transform.position.z),
+                    Quaternion.Euler(transform.localEulerAngles));
+                var rb = go.GetComponent<Rigidbody>();
+                go.GetComponent<CollisionPainter>().brush.splatScale = splatScale;
+                var buletForce = transform.forward * (Random.Range(0, 4) * 40f + (Random.Range(1f, 12f)));
+                buletForce += transform.right * Random.Range(-0.3f, 0.3f);
+                var mizukiri = go.GetComponent<Mizukiri>();
+                if (mizukiri != null)
+                {
+                    mizukiri.prevVelocity = buletForce;
+                    mizukiri.count = abilityLevel;
+                }
+
+                rb.AddForce(buletForce, ForceMode.Impulse);
+            }
+            
             shootTime = 0;
         }
-        
     }
 
     public void UIUpdate()
@@ -224,6 +332,39 @@ public class FPSActor : MonoBehaviour
     {
         OrangeBulletPrefab = Resources.Load("MizukiriBullet") as GameObject;
     }
-
     
+    //Potion系
+    public void HeistPotion()
+    {
+        heistTime += 12f;
+    }
+
+    public void HeistAddFunction()
+    {
+        heistPower = heistAddFixPower;
+    }
+    
+    public void HeistRemoveFunction()
+    {
+        heistPower = 1.0f;
+    }
+    public void KillDropTimePotion()
+    { 
+        killDropTime += 12f;
+    }
+
+    public void DoublePotion()
+    {
+        doubleTime += 12f;
+        doubleLevel += 1;
+    }
+    public void CoinDropPotion()
+    {
+        coinDropTime += 12f;
+    }
+
+    public void IncreaseEnemyPotion()
+    {
+        increaseEnemyTime += 12f;
+    }
 }

@@ -14,7 +14,11 @@ public class MizukiriWeapon :  Weapon
     public string saveKey;
     void Start()
     {
-        // ES3.Save("Money",100000);
+        if (ES3.KeyExists("Money") == false)
+        {
+            ES3.Save("Money",100000);
+        }
+        
         saveKey = this.GetType().Name +"Level";
         // ES3.Save(saveKey,1);
         // ES3.DeleteKey("MizukiriWeapon");
@@ -150,8 +154,30 @@ public class MizukiriWeapon :  Weapon
             if (CurrentLevel <= costList.Count)
             {
                 CurrentLevel += 1;
-                UpdateUI();
-                GameObject.Find("UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+                if (CurrentLevel <= costList.Count)
+                {
+                    UpdateUI();
+                    GameObject.Find("UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+                }
+                if (CurrentLevel > costList.Count)
+                {
+                    GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevelIndex].ToString();
+                    GameObject.Find("LevelPanel/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("InkScale/Lv").GetComponent<Text>().text = inkScaleList[currentLevelIndex].ToString();
+                    GameObject.Find("InkScale/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("InkAmo/Lv").GetComponent<Text>().text = inkAmoList[currentLevelIndex].ToString();
+                    GameObject.Find("InkAmo/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("SpitFire/Lv").GetComponent<Text>().text = spitFireList[currentLevelIndex].ToString();
+                    GameObject.Find("SpitFire/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("AbilityLevel/Lv").GetComponent<Text>().text =
+                        "Lv" + AbilityLevel[currentLevelIndex].ToString();
+                    GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
+                        "";
+                    isOne = true;
+                    GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
+                    return;
+                }
+                
             } else if (currentLevel == costList.Count)
             {
                 GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevel].ToString();

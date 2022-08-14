@@ -14,7 +14,10 @@ public class BasicWeapon :  Weapon
     public string saveKey;
     void Start()
     {
-        // ES3.Save("Money",100000);
+        if (ES3.KeyExists("Money") == false)
+        {
+            ES3.Save("Money",30000);
+        }
         saveKey = this.GetType().Name +"Level";
         // ES3.Save(saveKey,1);
         // ES3.DeleteKey("MizukiriWeapon");
@@ -82,26 +85,29 @@ public class BasicWeapon :  Weapon
             ES3.DeleteKey(this.GetType().Name +"Level");
             ES3.Save("Money",100000);
         }
-        
         if (isOne == false && SceneManager.GetActiveScene().name == "UpGrade") 
         {
-            if (currentLevel == costList.Count)
+            if (CurrentLevel > costList.Count)
             {
-                GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevel].ToString();
+                GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevelIndex].ToString();
                 GameObject.Find("LevelPanel/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("InkScale/Lv").GetComponent<Text>().text = inkScaleList[currentLevel].ToString();
+                GameObject.Find("InkScale/Lv").GetComponent<Text>().text = inkScaleList[currentLevelIndex].ToString();
                 GameObject.Find("InkScale/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("InkAmo/Lv").GetComponent<Text>().text = inkAmoList[currentLevel].ToString();
+                GameObject.Find("InkAmo/Lv").GetComponent<Text>().text = inkAmoList[currentLevelIndex].ToString();
                 GameObject.Find("InkAmo/LvNextVal").GetComponent<Text>().text = "";
-                GameObject.Find("SpitFire/Lv").GetComponent<Text>().text = spitFireList[currentLevel].ToString();
+                GameObject.Find("SpitFire/Lv").GetComponent<Text>().text = spitFireList[currentLevelIndex].ToString();
                 GameObject.Find("SpitFire/LvNextVal").GetComponent<Text>().text = "";
                 GameObject.Find("AbilityLevel/Lv").GetComponent<Text>().text =
-                    "Lv" + AbilityLevel[currentLevel].ToString();
+                    "Lv" + AbilityLevel[currentLevelIndex].ToString();
                 GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
                     "";
+                isOne = true;
+                GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
+                return;
             }
+            
             GameObject.Find("HaveMoneyText").GetComponent<Text>().text = ES3.Load<int>("Money").ToString()+"$";
-            GameObject.Find("/Canvas/AllFramePanel/L_Panel/L_InnerFramePanel/Button/UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+            GameObject.Find("/Canvas/AllFramePanel/L_Panel/L_InnerFramePanel/Button/UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevelIndex].ToString()+"$";
             CheckMax();
             GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().onClick.AddListener(Upgrade);
@@ -113,16 +119,19 @@ public class BasicWeapon :  Weapon
             {
                 GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
             }
+            UpdateUI();
+            
+            
             isOne = true;
         }
-        
+
         if (isOne == false && SceneManager.GetActiveScene().name != "UpGrade")
         {
             var actor = GetComponent<FPSActor>();
-            actor.currentInk = inkAmoList[CurrentLevel-1];
-            actor.splatScale = inkScaleList[CurrentLevel-1];
-            actor.spitFire = spitFireList[CurrentLevel-1];
-            actor.abilityLevel = AbilityLevel[CurrentLevel-1];
+            actor.currentInk = inkAmoList[CurrentLevel - 1];
+            actor.splatScale = inkScaleList[CurrentLevel - 1];
+            actor.spitFire = spitFireList[CurrentLevel - 1];
+            actor.abilityLevel = AbilityLevel[CurrentLevel - 1];
             actor.UIUpdate();
             isOne = true;
         }
@@ -136,7 +145,7 @@ public class BasicWeapon :  Weapon
     {
         var haveMoney = ES3.Load<int>("Money");
         
-        if (haveMoney >= costList[currentLevel-1] && currentLevel-1 <= costList.Count)
+        if (haveMoney >= costList[currentLevel-1] && currentLevel <= costList.Count)
         {
             haveMoney -= costList[currentLevel-1];
             ES3.Save<int>("Money", haveMoney);
@@ -145,8 +154,30 @@ public class BasicWeapon :  Weapon
             if (CurrentLevel <= costList.Count)
             {
                 CurrentLevel += 1;
-                UpdateUI();
-                GameObject.Find("UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+                if (CurrentLevel <= costList.Count)
+                {
+                    UpdateUI();
+                    GameObject.Find("UpgradeCostText").GetComponent<Text>().text = "Upgrade!!\n"+costList[currentLevel-1].ToString()+"$";
+                }
+                if (CurrentLevel > costList.Count)
+                {
+                    GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevelIndex].ToString();
+                    GameObject.Find("LevelPanel/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("InkScale/Lv").GetComponent<Text>().text = inkScaleList[currentLevelIndex].ToString();
+                    GameObject.Find("InkScale/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("InkAmo/Lv").GetComponent<Text>().text = inkAmoList[currentLevelIndex].ToString();
+                    GameObject.Find("InkAmo/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("SpitFire/Lv").GetComponent<Text>().text = spitFireList[currentLevelIndex].ToString();
+                    GameObject.Find("SpitFire/LvNextVal").GetComponent<Text>().text = "";
+                    GameObject.Find("AbilityLevel/Lv").GetComponent<Text>().text =
+                        "Lv" + AbilityLevel[currentLevelIndex].ToString();
+                    GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
+                        "";
+                    isOne = true;
+                    GameObject.Find("UpgradeCostText").transform.parent.GetComponent<Button>().interactable = false;
+                    return;
+                }
+                
             } else if (currentLevel == costList.Count)
             {
                 GameObject.Find("LevelPanel/Lv").GetComponent<Text>().text = "Lv" + levelList[currentLevel].ToString();
@@ -162,8 +193,6 @@ public class BasicWeapon :  Weapon
                 GameObject.Find("AbilityLevel/LvNextVal").GetComponent<Text>().text =
                     "";
             }
-
-            Save();    
         }
         if (costList[currentLevel - 1] <= ES3.Load<int>("Money") && currentLevelIndex < costList.Count)
         {

@@ -22,7 +22,7 @@ public class InkChargeItem : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player1")
         {
             
             var fPSActor = collider.gameObject.GetComponent<FPSActor>();

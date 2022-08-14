@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class SingleTONE : MonoBehaviour
 {
-    static public SingleTONE instance;
+    static public SingleTONE Instance;
     void Awake ()
     {
-        if (instance == null) {
- 
-            instance = this;
-            DontDestroyOnLoad (gameObject);
-        }
-        else {
- 
-            Destroy (gameObject);
-        }
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);    
+
+        DontDestroyOnLoad(gameObject);
+
     }
 }

@@ -11,7 +11,10 @@ public class CollisionPainter : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        HandleCollision(collision);
+        if(collision.gameObject.tag == "floor")
+        {
+            HandleCollision(collision);    
+        }
     }
 
     private void OnCollisionStay(Collision collision)
